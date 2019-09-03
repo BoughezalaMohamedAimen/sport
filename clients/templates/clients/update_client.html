@@ -1,0 +1,105 @@
+{% load forfaits_extras %}
+{% load static %}
+<div class="container">
+    <h4 class="bg-night text-white">{{form_update.errors}}</h4>
+  <div class="row">
+    
+        {%csrf_token%}
+        <div class="row">
+          <div class="col-md-3">
+            <img src="{% if form_update.photo.value %}/media/{{form_update.photo.value}}{%else%}{% static '/img/profile.png'%}{%endif%}" alt="" class="img-fluid">
+          </div>
+          <div class="col-md">
+
+            <div class="row">
+              <div class="col-md py-2">
+                <label  class="text-secondary">Nom:</label>
+                {{form_update.nom|add_class:"form-control"}}
+              </div>
+              <div class=" col-md py-2">
+                <label  class="text-secondary">Prénom:</label>
+                {{form_update.prenom|add_class:"form-control"}}
+              </div>
+              <div class=" col-md py-2">
+                <label  class="text-secondary">sex:</label>
+                {{form_update.sex|add_class:"form-control"}}
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class=" col-md py-2">
+                <label  class="text-secondary">Date Naissance:</label>
+                {{form_update.date_naissance|add_class:"form-control datepicker"}}
+              </div>
+              <div class=" col-md py-2">
+                <label  class="text-secondary">Adresse:</label>
+                {{form_update.adresse|add_class:"form-control"}}
+              </div>
+              <div class=" col-md py-2">
+                <label  class="text-secondary">telephone:</label>
+                {{form_update.telephone|add_class:"form-control"}}
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class=" col-md py-2">
+            <label  class="text-secondary">Telephone d'urgence:</label>
+            {{form_update.telephone_urgence|add_class:"form-control"}}
+          </div>
+          <div class=" col-md py-2">
+            <label  class="text-secondary">E-mail:</label>
+            {{form_update.email|add_class:"form-control"}}
+          </div>
+          <div class="col-md py-2">
+            <label  class="text-secondary">rfid:</label>
+            {{form_update.rfid|add_class:"form-control"}}
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class=" col-md py-2">
+            <label  class="text-secondary">seance:</label>
+            {{form_update.seance|add_class:"form-control"}}
+          </div>
+          <div class=" col-md py-2">
+            <label  class="text-secondary">Date debut:</label>
+            {{form_update.date_debut|add_class:"form-control datepicker"}}
+          </div>
+          <div class=" col-md py-2">
+            <label  class="text-secondary">Date fin:</label>
+            {{form_update.date_fin|add_class:"form-control datepicker"}}
+          </div>
+        </div>
+
+
+        <div class="row">
+
+        </div>
+
+        <div class="row">
+          <div class=" col-md py-2 photo-input-wrapper">
+            <label  class="text-secondary photo-label">Photo:</label>
+            {{form_update.photo|add_class:"form-control"}}
+          </div>
+          <div class=" col-md py-2">
+            <label  class="text-secondary">Solde:</label>
+            {{form_update.credit|add_class:"form-control"}}
+          </div>
+        </div>
+
+
+
+
+
+
+
+  </div>
+</div>

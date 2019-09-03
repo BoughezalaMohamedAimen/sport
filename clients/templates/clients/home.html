@@ -1,0 +1,62 @@
+{% extends 'base.html'%}
+{% block title%} Clients {% endblock title%}
+{% load static %}
+{% load forfaits_extras %}
+{% block styles%}
+
+
+ {% endblock styles%}
+{% block body%}
+
+<div class="container-fluid">
+
+
+
+      <h3 class="p-3 bg-night my-3 text-white">Liste Clients</h3>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Telephone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Séance</th>
+            <th scope="col">Début</th>
+            <th scope="col">Fin</th>
+            <th scope="col">Crédit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for client in clients %}
+          <tr data-toggle="modal" data-target="#modal" data-id={{client.id}}>
+            <th scope="row" class='id'>{{client.id}}</th>
+            <td class='nom'>{{client.nom}}</td>
+            <td class='nom'>{{client.prenom}}</td>
+            <td class='nom'>{{client.telephone}}</td>
+            <td class='nom'>{{client.email}}</td>
+            <td class='nbr_seance'>{{client.seance}}</td>
+            <td class='prix'>{{client.date_debut}}</td>
+            <td class='prix'>{{client.date_fin}}</td>
+            <td class='prix'>{{client.credit}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+
+
+</div>
+
+
+
+
+
+
+{% endblock body%}
+
+
+
+{% block scripts%}
+<script src="{%static 'js/main-client.js' %}"></script>
+ {% endblock scripts%}
