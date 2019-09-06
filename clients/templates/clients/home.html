@@ -29,7 +29,7 @@
         </thead>
         <tbody>
           {% for client in clients %}
-          <tr data-toggle="modal" data-target="#modal" data-id={{client.id}}>
+          <tr data-toggle="modal" data-target="#modal" data-id={{client.id}} class='client-row'>
             <th scope="row" class='id'>{{client.id}}</th>
             <td class='nom'>{{client.nom}}</td>
             <td class='nom'>{{client.prenom}}</td>
@@ -44,6 +44,25 @@
         </tbody>
       </table>
 
+<div class="text-center">
+  <div class="pagination">
+<span class="step-links">
+{% if clients.has_previous %}
+    <a href="?page=1" class='btn bg-day text-white paginator'>1</a>
+    <a href="?page={{ clients.previous_page_number }}" class='btn bg-day text-white paginator'> < </a>
+{% endif %}
+
+<span class="current">
+    Page {{ clients.number }} sur {{ clients.paginator.num_pages }}.
+</span>
+
+{% if clients.has_next %}
+    <a href="?page={{ clients.next_page_number }}" class='btn bg-day text-white paginator'> > </a>
+    <a href="?page={{ clients.paginator.num_pages }}" class='btn bg-day text-white paginator'>{{ clients.paginator.num_pages }}</a>
+{% endif %}
+</span>
+</div>
+</div>
 
 
 </div>

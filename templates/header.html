@@ -8,19 +8,22 @@
     <ul class="navbar-nav">
 
       <li class="nav-item">
-        <a class="nav-link text-white" href="{%url 'home_clients'%}" tabindex="-1" aria-disabled="true"> <i class='fa fa-user text-day'></i> Client</a>
+        <a class="nav-link text-white" href="{%url 'home_clients'%}" tabindex="-1" aria-disabled="true"> <i class='fas fa-address-card text-day'></i> Client</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-white" href="{%url 'home_forfaits'%}">Forfaits</a>
+        <a class="nav-link text-white" href="{%url 'home_forfaits'%}"> <i class='fa fa-user-card txt-day'></i>Tarification</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-white" href="#">Caisse</a>
+        <a class="nav-link text-white" href="#"> <i class='fa fa-money-bill text-day'></i> Caisse</a>
       </li>
     </ul>
-    <form class=" ml-3 form-inline position-relative">
-      <input class="search-input text-center" type="search" placeholder="Rfid" aria-label="Search">
+    <div class=" ml-3 form-inline position-relative">
+      <input class="search-input text-center rfid-search-input" type="search" placeholder="Rfid" aria-label="Search" autofocus>
       <i class="fa fa-search search-icon text-night"></i>
-
+    </div>
+    <form class=" my-3 form-inline position-relative">
+      <input class="search-input text-center" type="search" name='nom' placeholder="Nom Prénom" aria-label="Search" autofocus>
+      <i class="fa fa-search search-icon text-night"></i>
     </form>
     <span class="nav-item">
       <a class="nav-link text-white"  href='#' tabindex="-1" aria-disabled="true" data-toggle="modal" data-target="#modaladd"> <i class='fa fa-user-plus text-day'></i> Ajouter</a>

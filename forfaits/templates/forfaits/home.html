@@ -22,7 +22,7 @@
         </thead>
         <tbody>
           {% for forfait in forfaits %}
-          <tr data-toggle="modal" data-target="#exampleModalCenter">
+          <tr data-toggle="modal" data-target="#exampleModalCenter" class='forfait-row'>
             <th scope="row" class='id'>{{forfait.id}}</th>
             <td class='nom'>{{forfait.nom}}</td>
             <td class='nbr_seance'>{{forfait.nbr_seance}}</td>
@@ -62,7 +62,7 @@
                 {{form_update.nom|add_class:"form-control"}}
               </div>
               <div class="col-md-4">
-                <label  class="text-secondary">Séance <small>semaine</small></label>
+                <label  class="text-secondary">Séance <small>mois</small></label>
                 {{form_update.nbr_seance|add_class:"form-control"}}
               </div>
               <div class="col-md-4">
@@ -89,5 +89,5 @@
 
 
 {% block scripts%}
-
+  <script src="{% static '/js/main-forfait.js' %}"></script>
  {% endblock scripts%}

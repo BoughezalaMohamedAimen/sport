@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'forfaits',
     'clients',
 ]
@@ -106,15 +107,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Algiers'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 
@@ -134,8 +135,8 @@ STATICFILES_DIRS= [
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
-LOGIN_URL='/account/login'
-LOGIN_REDIRECT_URL='edit_profile'
+# LOGIN_URL='/account/login'
+# LOGIN_REDIRECT_URL='edit_profile'
 
 #
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -151,6 +152,6 @@ EMAIL_HOST_PASSWORD = 'doublidoubli1993'
 
 
 
-AUTHENTICATION_BACKENDS=(
-    'accounts.backends.EmailBackend',
-)
+# AUTHENTICATION_BACKENDS=(
+#     'accounts.backends.EmailBackend',
+# )

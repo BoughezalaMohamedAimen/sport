@@ -1,18 +1,53 @@
 $(document).ready(function(){
 
-    $('tr').click(function(){
-          $('#update').attr('action','update/'+$(this).find('th').html())
-        $(this).find('td').each(function(){
-          $('input[name="update-'+$(this).attr('class')+'"').val($(this).html())
-          })
-      $('input[name="update-id"]').val($(this).find('th').html())
+//rfid search
 
-      setTimeout(function(){
-        if(0<parseInt($('#id_update-seance').val())<3) $('#id_update-seance').css('background','rgba(255,215,0.3)')
-        if(parseInt($('#id_update-seance').val())<=0) $('#id_update-seance').css('background','rgba(220,20,60,.5)')
-      },1000)
+$('.rfid-search-input').keyup(function(e){
+  if(e.which == 13) {
+        $.ajax({
+          url:'/client/get/rfid',
+          method:'post',
+          data:{'rfid':$(this).val()},
+          success:function(st){
 
-    })
+            $('.client-info').html(st)
+            $('#historique-historique').hide()
+            $( ".datepicker" ).datepicker({"dateFormat":'dd/mm/yy'});
+            $('.photo-input-wrapper label,.photo-input-wrapper input[type="checkbox"],.photo-input-wrapper a').hide()
+            $('.photo-input-wrapper').html($('.photo-input-wrapper').html().replace('Currently:','').replace('Change:',''))
+            $('.photo-label').show()
+            $('#modal').modal('show');
 
+          }
+        })
+    }
+})
+
+//auto focus rfid
+$('#modal,#modaladd,#exampleModalCenter').on('hidden.bs.modal', function (e) {
+  setTimeout(function(){$('.rfid-search-input').focus()},300)
+  $('.marquer-seance').show()
+})
+
+//marquer seance
+
+$('body').on('click','.marquer-seance',function(){
+
+  $.get({
+    url:'/client/seance/'+$('.client-id-hidden').html(),
+    success:function(st){
+      $('.marquer-seance').hide()
+
+    }
+
+  })
+})
+
+
+//modal navigation
+$('body').on('click','.modal-navigate',function(){
+  $('.modal-part').hide()
+  $($(this).attr('data-show')).show()
+})
 
 })
