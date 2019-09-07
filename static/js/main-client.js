@@ -6,7 +6,8 @@ $(document).ready(function(){
       url:'update/'+id,
       success:function(st){
         $('.client-info').html(st)
-        $('#historique-historique').hide()
+        $('.modal-part').hide()
+        $('#client-form-update').show()
         $( ".datepicker" ).datepicker({"dateFormat":'dd/mm/yy'});
         /*remove django default file input **/
         $('.photo-input-wrapper label,.photo-input-wrapper input[type="checkbox"],.photo-input-wrapper a').hide()

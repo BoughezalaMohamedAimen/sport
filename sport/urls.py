@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import admin
 from django.urls import path,include,re_path
 from django.conf import settings
@@ -21,7 +22,20 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^forfait/', include('forfaits.urls')),
     re_path(r'^client/', include('clients.urls')),
+    re_path(r'^caisse/', include('caisse.urls')),
 ]+  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 admin.site.site_header='Administration du Site'
+
+
+
+
+
+
+from caisse.models import Caisse
+import datetime
+try:
+    caisse=Caisse.objects.get(date=datetime.date.today())
+except ObjectDoesNotExist:
+    Caisse().save()

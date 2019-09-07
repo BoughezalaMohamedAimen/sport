@@ -2,19 +2,23 @@
 <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static '/css/styles.css' %}">
 
-<h5 class="p-1 bg-info my-1 text-white">Présence </h5>
+<h5 class="p-1 bg-info my-1 text-white">Payments </h5>
 <table class="table table-bordered table-hover">
   <thead style='font-size:14px !important;'>
     <tr>
       <th scope="col">Date</th>
-      <th scope="col">Heure</th>
+      <th scope="col">forfait</th>
+      <th scope="col">total</th>
+      <th scope="col">Versement</th>
     </tr>
   </thead>
   <tbody>
-    {% for historique in historiques %}
+    {% for historique_payements in historiques_payements %}
     <tr style='font-size:14px !important;' class='py-0'>
-      <th scope="row" class='py-0'>{{historique.date_heure|date:"D d M Y"}}</th>
-      <td class='nom' class='py-0'>{{historique.date_heure|time:"H:i"}}</td>
+      <th scope="row" class='py-0'>{{historique_payements.date_heure|date:"D d M Y"}}</th>
+      <td class='nom' class='py-0'>{{historique_payements.forfait.nom}}</td>
+      <td class='nom' class='py-0'>{{historique_payements.montant}}</td>
+      <td class='nom' class='py-0'>{{historique_payements.versement}}</td>
     </tr>
     {% endfor %}
   </tbody>

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import *
 from django.db.models import Q
-from datetime import datetime
+import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Max
 from django.core.paginator import Paginator
@@ -45,9 +45,17 @@ class HomeClient(TemplateView):
 class UpdateClient(TemplateView):
     def get(self,request,id):
         client=Client.objects.get(id=id)
-        form_update=UpdateClientForm(instance=client)
-        last_seance=SeanceHistorique.objects.filter(client=client).order_by('-date_heure')[0]
-        context={'form_update':form_update,'client':client,'last_seance':last_seance}
+        try:
+            last_seance=SeanceHistorique.objects.filter(client=client).order_by('-date_heure')[0]
+        except:
+            last_seance=''
+        context={
+        'form_update':UpdateClientForm(instance=client),
+        'client':client,
+        'last_seance':last_seance,
+        'abonnement_form':AbonnementForm(),
+        'caisseday':Caisse.objects.get(date=datetime.date.today())
+        }
         return render(request,'clients/update_client.html',context)
 
     def post(self,request,id):
@@ -64,10 +72,7 @@ class GetClient(TemplateView):
         except:
             client=Client.objects.get(id=request.POST.get('rfid'));
 
-        form_update=UpdateClientForm(instance=client)
-        last_seance=SeanceHistorique.objects.filter(client=client).order_by('-date_heure')[0]
-        context={'form_update':form_update,'client':client,'last_seance':last_seance}
-        return render(request,'clients/update_client.html',context)
+        return redirect ('update_clients',client.id)
 
 def MarquerSeance(request,id):
     client=Client.objects.get(id=id)
@@ -82,3 +87,22 @@ def GetHistorique(request,id):
     page = request.GET.get('page')
     historiques = paginator.get_page(page)
     return render(request,'clients/historique_client.html',{'historiques':historiques})
+
+def GetHistoriquePayement(request,id):
+    client=Client.objects.get(id=id)
+    historique_list=Abonnement.objects.filter(client=client).order_by('-date_heure')
+    paginator = Paginator(historique_list, 10) # Show 25 clients per page
+    page = request.GET.get('page')
+    historiques_payements = paginator.get_page(page)
+    return render(request,'clients/historique_payement.html',{'historiques_payements':historiques_payements})
+
+
+
+class UpdateClientAbonement(TemplateView):
+    def post(self,request,id):
+        client=Client.objects.get(id=id)
+        abonnement_form=AbonnementForm(request.POST,prefix='abonnement')
+        if abonnement_form.is_valid():
+            abonnement_form.save()
+            client.renouvler(abonnement_form.cleaned_data['date_debut'],abonnement_form.cleaned_data['forfait'],abonnement_form.cleaned_data['nbr_mois'],abonnement_form.cleaned_data['montant'],abonnement_form.cleaned_data['versement'])
+        return redirect('home_clients')

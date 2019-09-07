@@ -6,5 +6,7 @@ urlpatterns = [
     path('update/<int:id>',UpdateClient.as_view(),name='update_clients'),
     path('get/rfid',csrf_exempt(GetClient.as_view()),name='by_rfid_clients'),
     path('seance/<int:id>',MarquerSeance,name='marquer_seance_clients'),
-    path('historique/<int:id>',GetHistorique,name='historique_page_num'),
+    path('historique/presence/<int:id>',GetHistorique,name='historique_page_num'),
+    path('historique/payement/<int:id>',GetHistoriquePayement,name='historique_payment_page_num'),
+    path('abonement/<int:id>',UpdateClientAbonement.as_view(),name='update_abonnement'),
 ]

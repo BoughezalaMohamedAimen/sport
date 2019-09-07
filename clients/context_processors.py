@@ -1,6 +1,9 @@
 from .forms import ClientForm
+import datetime
+from caisse.models import Caisse
 def add_client_form_to_context(request):
-    cart=ClientForm()
+    clientForm=ClientForm()
+
     return {
-        'AddClientForm': ClientForm
+        'AddClientForm': clientForm
     }

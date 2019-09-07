@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'forfaits',
     'clients',
+    'caisse',
 ]
 
 MIDDLEWARE = [

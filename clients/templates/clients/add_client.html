@@ -3,16 +3,8 @@
 
       <h4 class="bg-night text-white">{{AddClientForm.errors}}</h4>
         {%csrf_token%}
-        <div class="row">
-          <div class="col-md py-2">
-            <label  class="text-secondary">rfid:</label>
-            {{AddClientForm.rfid|add_class:"form-control "}}
-          </div>
-          <div class=" col-md py-2">
-            <label  class="text-secondary">seance:</label>
-            {{AddClientForm.seance|add_class:"form-control"}}
-          </div>
-        </div>
+
+
         <div class="row">
           <div class="col-md py-2">
             <label  class="text-secondary">Nom:</label>
@@ -22,18 +14,17 @@
             <label  class="text-secondary">Prénom:</label>
             {{AddClientForm.prenom|add_class:"form-control"}}
           </div>
-        </div>
-        <div class="row">
           <div class=" col-md py-2">
             <label  class="text-secondary">Date Naissance:</label>
             {{AddClientForm.date_naissance|add_class:"form-control datepicker"}}
           </div>
+        </div>
+        <div class="row">
+
           <div class=" col-md py-2">
             <label  class="text-secondary">sex:</label>
             {{AddClientForm.sex|add_class:"form-control"}}
           </div>
-        </div>
-        <div class="row">
           <div class=" col-md py-2">
             <label  class="text-secondary">Adresse:</label>
             {{AddClientForm.adresse|add_class:"form-control"}}
@@ -52,7 +43,13 @@
             <label  class="text-secondary">E-mail:</label>
             {{AddClientForm.email|add_class:"form-control"}}
           </div>
+          <div class=" col-md py-2">
+            <label  class="text-secondary">Séances:</label>
+            {{AddClientForm.seance|add_class:"form-control"}}
+          </div>
         </div>
+
+
         <div class="row">
           <div class=" col-md py-2">
             <label  class="text-secondary">Photo:</label>
@@ -61,6 +58,10 @@
           <div class=" col-md py-2">
             <label  class="text-secondary">Solde:</label>
             {{AddClientForm.credit|add_class:"form-control"}}
+          </div>
+          <div class="col-md py-2">
+            <label  class="text-secondary">rfid:</label>
+            {{AddClientForm.rfid|add_class:"form-control "}}
           </div>
         </div>
 
