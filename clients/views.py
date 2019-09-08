@@ -7,7 +7,7 @@ import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Max
 from django.core.paginator import Paginator
-
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
@@ -75,18 +75,50 @@ class GetClient(TemplateView):
         return redirect ('update_clients',client.id)
 
 def MarquerSeance(request,id):
-    client=Client.objects.get(id=id)
-    client.consome()
-    return HttpResponse(status=200)
+    try:
+        client=Client.objects.get(id=id)
+        client.consome()
+        return HttpResponse(status=200)
+    except ObjectDoesNotExist:
+        SeanceHistorique(versement=request.GET.get('versement'),nom=request.GET.get('nom')).save()
+        caisse=Caisse.objects.get(date=datetime.date.today())
+        caisse.fermeture_prevu+=int(request.GET.get('versement'))
+        caisse.save()
+        return redirect ('home_clients')
+
+
+
+def AnullerSeance(request,id):
+    seance=SeanceHistorique.objects.get(id=id)
+    if seance.client:
+        seance.client.seance+=1
+        seance.client.save()
+        seance.delete()
+        return redirect('historique_page_num',seance.client.id )
+    else:
+        seance.delete()
+        caisse=Caisse.objects.get(date=seance.date_heure)
+        caisse.fermeture_prevu-=seance.versement
+        caisse.save()
+        return redirect('historique_page_num',0 )
+
+
+
 
 
 def GetHistorique(request,id):
-    client=Client.objects.get(id=id)
-    historique_list=SeanceHistorique.objects.filter(client=client).order_by('-date_heure')
+    try:
+        client=Client.objects.get(id=id)
+        historique_list=SeanceHistorique.objects.filter(client=client).order_by('-date_heure')
+    except ObjectDoesNotExist:
+        historique_list=SeanceHistorique.objects.filter(client=None).order_by('-date_heure')
     paginator = Paginator(historique_list, 10) # Show 25 clients per page
     page = request.GET.get('page')
     historiques = paginator.get_page(page)
     return render(request,'clients/historique_client.html',{'historiques':historiques})
+
+
+
 
 def GetHistoriquePayement(request,id):
     client=Client.objects.get(id=id)
@@ -103,6 +135,14 @@ class UpdateClientAbonement(TemplateView):
         client=Client.objects.get(id=id)
         abonnement_form=AbonnementForm(request.POST,prefix='abonnement')
         if abonnement_form.is_valid():
+            client.renouvler(abonnement_form.cleaned_data['date_debut'],abonnement_form.cleaned_data['forfait'],abonnement_form.cleaned_data['nbr_mois'])
             abonnement_form.save()
-            client.renouvler(abonnement_form.cleaned_data['date_debut'],abonnement_form.cleaned_data['forfait'],abonnement_form.cleaned_data['nbr_mois'],abonnement_form.cleaned_data['montant'],abonnement_form.cleaned_data['versement'])
+
         return redirect('home_clients')
+
+
+class DeleteClientAbonement(TemplateView):
+    def get(self,request,id):
+        abonement=Abonnement.objects.get(id=id)
+        abonement.delete()
+        return redirect('historique_payment_page_num',abonement.client.id)

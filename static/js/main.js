@@ -38,6 +38,8 @@ $('body').on('click','.marquer-seance',function(){
     url:'/client/seance/'+$('.client-id-hidden').html(),
     success:function(st){
       $('.marquer-seance').hide()
+      var iframe = document.getElementById('presence');
+      iframe.src = iframe.src;
 
     }
 

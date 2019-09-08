@@ -18,7 +18,13 @@
       <th scope="row" class='py-0'>{{historique_payements.date_heure|date:"D d M Y"}}</th>
       <td class='nom' class='py-0'>{{historique_payements.forfait.nom}}</td>
       <td class='nom' class='py-0'>{{historique_payements.montant}}</td>
-      <td class='nom' class='py-0'>{{historique_payements.versement}}</td>
+      <td class='nom' class='py-0'>
+        {{historique_payements.versement}}
+        {% if forloop.first %}
+        <a href="{% url 'delete_abonnement' historique_payements.id %}" class="badge bg-night text-white">Suprimmer</a>
+        {% endif%}
+      </td>
+
     </tr>
     {% endfor %}
   </tbody>
@@ -27,18 +33,18 @@
 <div class="text-center">
 <div class="pagination">
 <span class="step-links">
-{% if historiques.has_previous %}
-<a href="/client/historique/{{historiques.0.id}}?page=1" class='btn bg-info text-white paginator'>1</a>
-<a href="/client/historique/{{historiques.0.id}}?page={{ historiques.previous_page_number }}" class='btn bg-info text-white paginator'> < </a>
+{% if historique_payements.has_previous %}
+<a href="/client/historique/{{historique_payements.0.id}}?page=1" class='btn bg-info text-white paginator'>1</a>
+<a href="/client/historique/{{historique_payements.0.id}}?page={{ historique_payements.previous_page_number }}" class='btn bg-info text-white paginator'> < </a>
 {% endif %}
 
 <span class="current">
-Page {{ historiques.number }} sur {{ historiques.paginator.num_pages }}.
+Page {{ historique_payements.number }} sur {{ historique_payements.paginator.num_pages }}.
 </span>
 
-{% if historiques.has_next %}
-<a href="/client/historique/{{historiques.0.client.id}}?page={{ historiques.next_page_number }}" class='btn bg-info text-white paginator-historique'> > </a>
-<a href="/client/historique/{{historiques.0.client.id}}?page={{ historiques.paginator.num_pages }}" class='btn bg-info text-white paginator-historique'>{{ historiques.paginator.num_pages }}</a>
+{% if historique_payements.has_next %}
+<a href="/client/historique/{{historique_payements.0.client.id}}?page={{ historique_payements.next_page_number }}" class='btn bg-info text-white paginator-historique'> > </a>
+<a href="/client/historique/{{historique_payements.0.client.id}}?page={{ historique_payements.paginator.num_pages }}" class='btn bg-info text-white paginator-historique'>{{ historique_payements.paginator.num_pages }}</a>
 {% endif %}
 </span>
 </div>

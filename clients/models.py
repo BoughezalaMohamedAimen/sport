@@ -3,7 +3,7 @@ import datetime
 from dateutil.relativedelta import relativedelta
 from caisse.models import Caisse
 from forfaits.models import Forfait
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,post_delete
 from django.dispatch import receiver
 
 
@@ -34,18 +34,19 @@ class Client(models.Model):
         return self.nom+' '+self.prenom
 
 
-    def renouvler(self,date_debut,forfait,mois,total,versement):
+    def renouvler(self,date_debut,forfait,mois):
         self.seance+=forfait.nbr_seance*mois
         self.date_debut=date_debut
         self.date_fin=date_debut+ relativedelta(months=mois)
-        self.credit+=total-versement
         self.save()
 
 
 
 class SeanceHistorique(models.Model):
     date_heure=models.DateTimeField(default=datetime.datetime.now, blank='true')
-    client=models.ForeignKey(Client,on_delete=models.CASCADE,blank='true')
+    client=models.ForeignKey(Client,on_delete=models.CASCADE,blank='true',null='true')
+    versement=models.PositiveIntegerField(default=0)
+    nom=models.CharField(max_length=255,default='Anonnyme')
 
 
 
@@ -70,4 +71,25 @@ from django.dispatch import receiver
 def my_handler(sender, **kwargs):
     caisse=Caisse.objects.get(date=datetime.date.today())
     caisse.fermeture_prevu+=kwargs['instance'].versement
+    client=Client.objects.get(id=kwargs['instance'].client.id)
+    client.credit+=kwargs['instance'].montant-kwargs['instance'].versement
+    client.save()
+    caisse.save()
+
+
+
+
+
+
+
+@receiver(post_delete, sender=Abonnement)
+def my_handler_delete(sender, **kwargs):
+    caisse=Caisse.objects.get(date=kwargs['instance'].date_heure)
+    caisse.fermeture_prevu-=kwargs['instance'].versement
+    client=Client.objects.get(id=kwargs['instance'].client.id)
+    client.credit-=kwargs['instance'].montant-kwargs['instance'].versement
+    client.seance-=kwargs['instance'].forfait.nbr_seance*kwargs['instance'].nbr_mois
+    client.date_debut-= relativedelta(months=kwargs['instance'].nbr_mois)
+    client.date_fin-= relativedelta(months=kwargs['instance'].nbr_mois)
+    client.save()
     caisse.save()

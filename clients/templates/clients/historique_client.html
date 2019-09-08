@@ -8,6 +8,7 @@
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Heure</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -15,6 +16,7 @@
     <tr style='font-size:14px !important;' class='py-0'>
       <th scope="row" class='py-0'>{{historique.date_heure|date:"D d M Y"}}</th>
       <td class='nom' class='py-0'>{{historique.date_heure|time:"H:i"}}</td>
+      <td class='nom' class='py-0'>      <a href="{% url 'suprimmer_seance_clients' historique.id %}" class="badge bg-night text-white">Anuller</a></td>
     </tr>
     {% endfor %}
   </tbody>

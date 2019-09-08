@@ -25,11 +25,36 @@
       <input class="search-input text-center" type="search" name='nom' placeholder="Nom Prénom" aria-label="Search" autofocus>
       <i class="fa fa-search search-icon text-night"></i>
     </form>
-    <span class="nav-item">
+    <span class="nav-item mx-1">
       <a class="nav-link text-white"  href='#' tabindex="-1" aria-disabled="true" data-toggle="modal" data-target="#modaladd"> <i class='fa fa-user-plus text-day'></i> Ajouter</a>
+    </span>
+    <span class="nav-item mx-1">
+      <a class="nav-link text-white"   tabindex="-1" data-toggle="collapse" href="#seance_libre" > <i class="fa fa-caret-right text-day"></i> Séance libre</a>
     </span>
   </div>
 </nav>
+<div class="container bg-light collapse" id='seance_libre'>
+  <div class="row">
+    <div class="col-md-5 offset-md-7 border-left border-right">
+      <form action="{% url 'marquer_seance_clients' 0%}">
+        <div class="row py-2">
+          <div class="col-md">
+            <label> Nom: </label>
+            <input type="text" name='nom' class='form-control' value='Anonymme'>
+          </div>
+          <div class="col-md">
+            <label> Versement: </label>
+            <input type="number" name='versement' class='form-control' value=2000>
+          </div>
+          <div class="col-md pt-1">
+            <br>
+            <button type='submit' class='btn bg-night text-white'>Valider</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <div class="container-fluid py-2 bg-day ">
 
 </div>
