@@ -100,7 +100,7 @@ def AnullerSeance(request,id):
         caisse=Caisse.objects.get(date=seance.date_heure)
         caisse.fermeture_prevu-=seance.versement
         caisse.save()
-        return redirect('historique_page_num',0 )
+        return redirect('historique_seance_libre_page_num',caisse.id )
 
 
 

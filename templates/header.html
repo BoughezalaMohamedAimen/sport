@@ -1,6 +1,6 @@
 {%load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-night">
-  <a class="navbar-brand" href="#">Gym</a>
+  <a class="navbar-brand" href="#">Gym<small class="text-day">Pro</small></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -21,7 +21,7 @@
       <input class="search-input text-center rfid-search-input" type="search" placeholder="Rfid" aria-label="Search" autofocus>
       <i class="fa fa-search search-icon text-night"></i>
     </div>
-    <form class=" my-3 form-inline position-relative">
+    <form class=" my-3 form-inline position-relative" action="{% url 'home_clients' %}">
       <input class="search-input text-center" type="search" name='nom' placeholder="Nom Prénom" aria-label="Search" autofocus>
       <i class="fa fa-search search-icon text-night"></i>
     </form>
@@ -33,7 +33,7 @@
     </span>
   </div>
 </nav>
-<div class="container bg-light collapse" id='seance_libre'>
+<div class="container-fluid bg-day collapse" id='seance_libre'>
   <div class="row">
     <div class="col-md-5 offset-md-7 border-left border-right">
       <form action="{% url 'marquer_seance_clients' 0%}">

@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from .forms import *
 from django.core.paginator import Paginator
 from .models import *
+from clients.models import SeanceHistorique
 # Create your views here.
 class HomeCaisse(TemplateView):
     def get(self,request):
@@ -33,3 +34,13 @@ class UpdateCaisse(TemplateView):
         if form_update.is_valid():
             form_update.save()
         return redirect('home_caisse')
+
+
+def GetSeanceLibre(request,id):
+    caisse=Caisse.objects.get(id=id)
+    print(caisse.date)
+    historique_list=SeanceHistorique.objects.filter(client=None,date_heure__date=caisse.date).order_by('-date_heure')
+    paginator = Paginator(historique_list, 10) # Show 25 clients per page
+    page = request.GET.get('page')
+    historiques = paginator.get_page(page)
+    return render(request,'caisse/historique_seance-libre.html',{'historiques':historiques})

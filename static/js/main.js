@@ -25,7 +25,7 @@ $('.rfid-search-input').keyup(function(e){
 })
 
 //auto focus rfid
-$('#modal,#modaladd,#exampleModalCenter').on('hidden.bs.modal', function (e) {
+$('.modal').on('hidden.bs.modal', function (e) {
   setTimeout(function(){$('.rfid-search-input').val('').focus()},300)
   $('.marquer-seance').show()
 })
