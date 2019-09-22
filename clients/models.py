@@ -23,6 +23,7 @@ class Client(models.Model):
     date_debut=models.DateField(default=datetime.datetime.now,blank='true')
     date_fin=models.DateField(default=datetime.datetime.now,blank='true')
     credit=models.PositiveIntegerField(default=0)
+    status=models.BooleanField(default='False')
 
 
     def consome(self):
@@ -38,6 +39,7 @@ class Client(models.Model):
         self.seance+=forfait.nbr_seance*mois
         self.date_debut=date_debut
         self.date_fin=date_debut+ relativedelta(months=mois)
+        self.status=False
         self.save()
 
 

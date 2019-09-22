@@ -1,5 +1,9 @@
 $(document).ready(function(){
 
+
+$('*').blur(function(){
+  setTimeout(function(){$('.rfid-search-input').val('').focus()},300)
+})
 //rfid search
 
 $('.rfid-search-input').keyup(function(e){
@@ -18,6 +22,7 @@ $('.rfid-search-input').keyup(function(e){
             $('.photo-input-wrapper').html($('.photo-input-wrapper').html().replace('Currently:','').replace('Change:',''))
             $('.photo-label').show()
             $('#modal').modal('show');
+            setTimeout(function(){$('.rfid-search-input').val('').focus()},300)
 
           }
         })
@@ -28,6 +33,10 @@ $('.rfid-search-input').keyup(function(e){
 $('.modal').on('hidden.bs.modal', function (e) {
   setTimeout(function(){$('.rfid-search-input').val('').focus()},300)
   $('.marquer-seance').show()
+})
+
+$('.modal').on('shown.bs.modal', function (e) {
+  setTimeout(function(){$('.rfid-search-input').val('').focus()},300)
 })
 
 //marquer seance
