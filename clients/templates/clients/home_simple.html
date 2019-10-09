@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 
-<div class="modal-header">
+
 <div class="container">
   <div class="row">
     <div class="col-md-5">
@@ -10,19 +10,15 @@
       <small>Dérniere séance <b class="text-night">{{last_seance.date_heure|naturaltime}}</b></small>
     </div>
     <div class="col-md text-right mt-2">
-      <b class="text-white  btn rounded shadow  bg-info modal-navigate" data-show='#abonnement-abonnement'> <small><i class='fa fa-user-circle'></i> Abonnement</small></b>
-      <b class="text-white  btn rounded shadow  bg-night modal-navigate" data-show='#historique-historique'> <small><i class='fa fa-clock'></i> Historique</small></b>
       <b class="text-white marquer-seance btn rounded shadow  bg-success"> <small><i class='fa fa-angle-right'></i> Nouvelle Séance</small></b>
     </div>
   </div>
 </div>
 
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-  <span aria-hidden="true">&times;</span>
-</button>
-</div>
 
-<div class="modal-body ">
+
+
+
 
 
 
@@ -101,10 +97,7 @@
 
 
 
-          <div class="row rounded" style='background: {% if client.valid_abonement%}rgba(50,180,100,.5);{%else%}rgba(180,50,100,.5){%endif%}'>
-            <div class="col-md-12">
-              <h3 class='text-center'>{{client.actif_abonement.forfait}}</h3>
-            </div>
+          <div class="row" style='background: rgba(50,180,100,.5);'>
             <div class=" col-md py-2">
               <label  class="text-secondary">seance:</label>
               {{form_update.seance|add_class:"form-control"}}
@@ -142,11 +135,3 @@
 </form>
     </div>
   </div>
-
-
-
-
-</div>
-<div class="modal-footer">
-
-</div>

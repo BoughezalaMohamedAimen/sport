@@ -24,9 +24,10 @@ from django.conf.urls.static import static
 def Home(request):
     return redirect('home_clients')
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Home ,name='home'),
+    path('',Home ,name='home'),
     re_path(r'^forfait/', include('forfaits.urls')),
     re_path(r'^client/', include('clients.urls')),
     re_path(r'^caisse/', include('caisse.urls')),
@@ -39,29 +40,29 @@ admin.site.site_header='Administration du Site'
 
 
 
-##create new caisse every day
-from caisse.models import Caisse
-import datetime
-try:
-    caisse=Caisse.objects.get(date=datetime.date.today())
-except ObjectDoesNotExist:
-    Caisse().save()
-
-
-##delete invalid seance
-from clients.models import Client
-
-try:
-    clients=Client.objects.filter(date_fin__lte=datetime.date.today(),status='False',seance__gte=0)
-    for client in clients:
-        client.date_fin=datetime.date.today()
-        client.seance=0
-        client.status='True'  #if we have already change it automatically
-        client.save()
-except:
-    pass
-
-
-##backup database
-from shutil import copyfile
-copyfile('db.sqlite3', 'c:/backup/'+str(datetime.date.today())+'.sqlite3')
+#create new caisse every day
+# from caisse.models import Caisse
+# import datetime
+# try:
+#     caisse=Caisse.objects.get(date=datetime.date.today())
+# except ObjectDoesNotExist:
+#     Caisse().save()
+#
+#
+# ##delete invalid seance
+# from clients.models import Client
+#
+# try:
+#     clients=Client.objects.filter(date_fin__lte=datetime.date.today(),status='False',seance__gte=0)
+#     for client in clients:
+#         client.date_fin=datetime.date.today()
+#         client.seance=0
+#         client.status='True'  #if we have already change it automatically
+#         client.save()
+# except:
+#     pass
+#
+#
+# ##backup database
+# from shutil import copyfile
+# copyfile('db.sqlite3', 'c:/backup/'+str(datetime.date.today())+'.sqlite3')

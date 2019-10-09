@@ -42,6 +42,22 @@ class Client(models.Model):
         self.status=False
         self.save()
 
+    def valid_abonement(self):
+        if datetime.date.today() > self.date_fin:
+            return False
+        else:
+            if self.seance>0:
+                return True
+            else:
+                return False
+
+
+    def actif_abonement(self):
+        try:
+            return Abonnement.objects.filter(client=self).order_by('-date_heure')[0]
+        except:
+            return None
+
 
 
 class SeanceHistorique(models.Model):

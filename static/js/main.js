@@ -1,9 +1,9 @@
 $(document).ready(function(){
 
 
-$('*').blur(function(){
-  setTimeout(function(){$('.rfid-search-input').val('').focus()},300)
-})
+// $('*').not('.rfid-search-input').blur(function(){
+//   setTimeout(function(){$('.rfid-search-input').val('').focus()},300)
+// })
 //rfid search
 
 $('.rfid-search-input').keyup(function(e){
@@ -23,8 +23,12 @@ $('.rfid-search-input').keyup(function(e){
             $('.photo-label').show()
             $('#modal').modal('show');
             setTimeout(function(){$('.rfid-search-input').val('').focus()},300)
-
-          }
+          },
+          error:function (xhr, ajaxOptions, thrownError){
+              if(xhr.status==404) {
+                setTimeout(function(){$('.rfid-search-input').val('').focus()},300)
+            }
+        }
         })
     }
 })
